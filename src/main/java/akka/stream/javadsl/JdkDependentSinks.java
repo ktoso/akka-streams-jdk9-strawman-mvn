@@ -1,10 +1,11 @@
 package akka.stream.javadsl;
 
+
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
-public interface ChangeReturnTypeJdkDependentSinks {
+public interface JdkDependentSinks {
   /**
    * Acts AS IF existing method on Sink in Akka 2.5.x.
    * So it returns Reactive Streams interfaces.
@@ -31,7 +32,7 @@ public interface ChangeReturnTypeJdkDependentSinks {
                 } catch (ClassCastException ex) {
                   subscriber.onError(ex);
                 }
-                
+
                 // can only signal one thing
                 done = true;
               }
@@ -45,5 +46,5 @@ public interface ChangeReturnTypeJdkDependentSinks {
       }
     };
   }
-  
+
 }

@@ -10,8 +10,6 @@ public class MainJava9 {
   public static void main(String[] args) {
     
     
-    // EXAMPLE - I don't think we shou
-    
     // this exists only to emulate what Scala will do with traits and putting them into classes
     final Sinks Sink = Sinks.MODULE_CHANGE_DEFAULT;
 
@@ -20,7 +18,6 @@ public class MainJava9 {
       Source.single("hello").runWith(Sink.asPublisher());
     rs.subscribe(printlnRS);
 
-//    // JDK9 users, Akka 2.5, multi-release JAR powered JDK9 Flow return type
     Flow.Publisher<String> jdk = 
       Source.single("hello").runWith(Sink.asFlowPublisher());
     jdk.subscribe(printlnJDK);
