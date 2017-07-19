@@ -6,8 +6,8 @@ This is a design proposal and proof-of-concept of using *multi-release jars*.
 
 Be as compatible, binary and source between versions, such that:
 
-- just upgrading JDK8 to JDK9, but not using Flow.*, just using the existing Reactive Streams ecosystem
-- upgrading JDK8 to JDK9 and using the Flow.* interfaces for interop with other libraries (which is the indended use case),
+- just upgrading JDK8 to JDK9, but not using Flow.*, just using the existing Reactive Streams ecosystem,
+- upgrading JDK8 to JDK9 and using the Flow.* interfaces,
 - upgrading Akka Streams,
 
 ... is seamless, binary and source compatible, and trivial.
@@ -86,9 +86,11 @@ Flow.Publisher onNext = hello
 Flow.Publisher onComplete()
 ```
 
-- JDK8 users are not tempted to use JDK9 interfaces since IDEs should not even display those methods - since they're "hiden" (see the jar format below).
+- JDK8 users are not tempted to use JDK9 interfaces 
+  - since IDEs should not even display those methods - since they're "hiden" (see the jar format below)
 - JDK9 users can do whatever they want
 - we're not forced to set target level to 9
+  - so can ship such version ASAP
 
 
 The JAR file looks like this:
