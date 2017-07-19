@@ -1,4 +1,4 @@
-# Adopting JDK8 Flow.* without hurting JDK8 Reactive Streams users with Akka Streams
+# Adopting JDK9 Flow.* without hurting JDK8 Reactive Streams users with Akka Streams
 
 This is a design proposal and proof-of-concept of using *multi-release jars*.
 
