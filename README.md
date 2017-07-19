@@ -27,7 +27,7 @@ To be verified with Scala traits, but as far as I can see it can be easily pulle
 
 Internally:
 
-- we keep using RS interfaces, since we can not demant the presence of `Flow.*` on classpath
+- we keep using RS interfaces, since we can not demand JDK9 yet at this point - would be a big step and blocker for many bigger organisations
 - if we get or expose RS interfaces, we just do so as usual
 - if we get or expose JDK `Flow.*` interfaces, we adapt them to RS
   - note that the semantics are 1:1 exactly the same, it's just a simple type adaptation
