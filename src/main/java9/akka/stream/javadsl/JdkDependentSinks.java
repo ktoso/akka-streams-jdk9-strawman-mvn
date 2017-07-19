@@ -1,5 +1,9 @@
 package akka.stream.javadsl;
 
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.concurrent.Flow;
 
 /**
@@ -11,16 +15,16 @@ public interface JdkDependentSinks {
    * Acts AS IF existing method on Sink in Akka 2.5.x.
    * So it returns Reactive Streams interfaces.
    */
-  public default <T> Sink<T, Flow.Publisher<T>> asPublisher() {
-    return new Sink<T, Flow.Publisher<T>>() {
-      Flow.Publisher<T> mockMaterialize(Source<T> source) {
+  public default <T> Sink<T, Publisher<T>> asPublisher() {
+    return new Sink<T, Publisher<T>>() {
+      Publisher<T> mockMaterialize(Source<T> source) {
         // just mock impl, not fully compliant
-        return new Flow.Publisher<T>() {
+        return new Publisher<T>() {
           private volatile boolean done = false;
 
           @SuppressWarnings("Duplicates")
-          public void subscribe(final Flow.Subscriber<? super T> subscriber) {
-            subscriber.onSubscribe(new Flow.Subscription() {
+          public void subscribe(final Subscriber<? super T> subscriber) {
+            subscriber.onSubscribe(new Subscription() {
               public void request(long n) {
                 try {
                   if (n > 0 && !done) {
