@@ -13,10 +13,10 @@ public class MainJava9 {
     // this exists only to emulate what Scala will do with traits and putting them into classes
     final Sinks Sink = Sinks.MODULE_CHANGE_DEFAULT;
 
-    // existing users, changing to JDK9  should still work with Reactive Streams
-    final org.reactivestreams.Publisher<String> rs = 
-      Source.single("hello").runWith(Sink.asPublisher());
-    rs.subscribe(printlnRS);
+//    // existing users, changing to JDK9  should still work with Reactive Streams
+//    final org.reactivestreams.Publisher<String> rs = 
+//      Source.single("hello").runWith(Sink.asPublisher());
+//    rs.subscribe(printlnRS);
 
     Flow.Publisher<String> jdk = 
       Source.single("hello").runWith(Sink.asFlowPublisher());

@@ -20,8 +20,8 @@
     <java9.sourceDirectory>${project.basedir}/src/main/java9</java9.sourceDirectory>
     <java9.build.outputDirectory>${project.build.directory}/classes-java9</java9.build.outputDirectory>
 
-    <maven.compiler.source>1.9</maven.compiler.source>
-    <maven.compiler.target>1.9</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
 
