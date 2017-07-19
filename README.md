@@ -44,8 +44,60 @@ In future externally:
 
 - No API changes, everyone keeps calling the same APIs, even when we "moved off from" RS interfaces internally
 
-
 ## Dependencies
 
 - In order to pull this off in Akka we will have to develop the multi-release feature for sbt: https://github.com/sbt/sbt/issues/3036
 - For this to be useful in practice JDK9 should be out of early access, however we can and should prepare the artifacts earlier so people can use JDK9 Flow.* as quickly as they want, especially since Akka Streams is at the core of the vibrant integartion ecosystem that Reactive Streams and [Alpakka](https://github.com/akka/alpakka) have created
+
+# Visual explanation
+
+Usage:
+
+```
+master u+3!akka-streams-jdk9-strawman-mvn *> mvn clean package > /dev/null
+
+== JDK8 user ==
+
+master u+3!akka-streams-jdk9-strawman-mvn *> ./8.sh
+master u+3!akka-streams-jdk9-strawman-mvn *> java -version
+java version "1.8.0_131"
+Java(TM) SE Runtime Environment (build 1.8.0_131-b11)
+Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
+master u+3!akka-streams-jdk9-strawman-mvn *> java -cp $HOME/.m2/repository/org/reactivestreams/reactive-streams/1.0.0/reactive-streams-1.0.0.jar:target/akka-streams-jdk9-strawman-mvn.jar com.example.MainJava8
+ReactiveStreams onNext = hello
+ReactiveStreams onComplete()
+
+== JDK9 user == 
+
+master u+3!akka-streams-jdk9-strawman-mvn *> ./9.sh
+master u+3!akka-streams-jdk9-strawman-mvn *> java -version
+java version "9-ea"
+Java(TM) SE Runtime Environment (build 9-ea+174)
+Java HotSpot(TM) 64-Bit Server VM (build 9-ea+174, mixed mode)
+
+# "old code" just works, continues to work with existing JDK8 methods etc
+master u+3!akka-streams-jdk9-strawman-mvn *> java -cp $HOME/.m2/repository/org/reactivestreams/reactive-streams/1.0.0/reactive-streams-1.0.0.jar:target/akka-streams-jdk9-strawman-mvn.jar com.example.MainJava8
+ReactiveStreams onNext = hello
+ReactiveStreams onComplete()
+
+# "new code" can use JDK9 instead
+master u+3!akka-streams-jdk9-strawman-mvn *> java -cp $HOME/.m2/repository/org/reactivestreams/reactive-streams/1.0.0/reactive-streams-1.0.0.jar:target/akka-streams-jdk9-strawman-mvn.jar com.example.MainJava9
+Flow.Publisher onNext = hello
+Flow.Publisher onComplete()
+```
+
+- JDK8 users are not tempted to use JDK9 interfaces since IDEs should not even display those methods - since they're "hiden" (see the jar format below).
+- JDK9 users can do whatever they want
+- we're not forced to set target level to 9
+
+
+The JAR file looks like this:
+
+```
+...
+akka/stream/javadsl/JdkDependentSinks.class
+...
+META-INF/versions/9/akka/stream/javadsl/JdkDependentSinks.class
+```
+
+The one in `META-INF/versions/9` is loaded *instead* of the "normal" one if running on JDK9.
