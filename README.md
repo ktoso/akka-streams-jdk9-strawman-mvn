@@ -12,6 +12,11 @@ Be as compatible, binary and source between versions, such that:
 
 ... is seamless, binary and source compatible, and trivial.
 
+### Side note: Why "just add a new method that returns Flow.*" breaks
+
+We can't just "add the method" since classloading of the FlowOps interfaces and friends will then fail.
+See https://github.com/ktoso/akka-streams-jdk9-strawman-mvn/blob/master/src/main/java/com/example/MainJava9_IN_8.java for an example of that.
+
 ## Solution design
 
 To be verified with Scala traits, but as far as I can see it can be easily pulled off:
